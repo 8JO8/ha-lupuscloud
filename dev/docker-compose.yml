@@ -1,0 +1,15 @@
+# Local test instance: docker compose -f dev/docker-compose.yml up -d
+# Home Assistant is then reachable at http://localhost:8123
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: ha-lupuscloud-dev
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - ./config:/config
+      - ../custom_components/lupuscloud:/config/custom_components/lupuscloud:ro
+      - ./tools:/config/tools:ro

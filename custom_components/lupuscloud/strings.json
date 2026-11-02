@@ -1,0 +1,173 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lupus Cloud",
+        "description": "Log in with your lupuscloud.com account.",
+        "data": {
+          "username": "E-mail",
+          "password": "Password"
+        }
+      },
+      "mfa": {
+        "title": "Two-factor authentication",
+        "description": "Enter the code from your {method}.",
+        "data": {
+          "code": "Code"
+        }
+      },
+      "areas": {
+        "title": "Assign rooms to areas",
+        "description": "Choose a Home Assistant area for each Lupus room that contains devices. The devices are added to that area. Devices in rooms without an area are not added. You can change this later in the integration options."
+      },
+      "reconfigure": {
+        "title": "Change Lupus Cloud password",
+        "description": "Enter the current password for {username}, e.g. after you changed it in the Lupus Cloud.",
+        "data": {
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate Lupus Cloud",
+        "description": "The login for {username} has expired. Please enter your password again.",
+        "data": {
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid e-mail or password.",
+      "invalid_code": "Invalid or expired code. Please log in again.",
+      "cannot_connect": "Could not connect to the Lupus Cloud.",
+      "mfa_required": "A two-factor code is required.",
+      "no_rooms": "Assign at least one room to an area.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reauth_successful": "Re-authentication was successful.",
+      "reconfigure_successful": "The password was updated.",
+      "wrong_account": "You logged in with a different account."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Lupus Cloud options",
+        "description": "Webhook status: {webhook_status}\n\nAlarms are pushed instantly via webhook. Measurements are polled at the interval below.",
+        "data": {
+          "alarm_events": "Events that count as alarm",
+          "scan_interval": "Polling interval",
+          "webhook_enabled": "Receive alarms instantly via webhook",
+          "webhook_url_override": "Public Home Assistant URL for the webhook (optional)"
+        },
+        "data_description": {
+          "alarm_events": "Only these events switch the alarm sensors on and fire the lupuscloud_alarm event. All events are still available as lupuscloud_webhook / lupuscloud_notification events.",
+          "webhook_url_override": "Only needed if Home Assistant has no external URL and no Home Assistant Cloud. Enter the public base address of your Home Assistant (without /api/...)."
+        }
+      },
+      "areas": {
+        "title": "Assign rooms to areas",
+        "description": "Choose a Home Assistant area for each Lupus room that contains devices. Devices in rooms without an area are not added (existing ones are removed)."
+      }
+    },
+    "abort": {
+      "not_loaded": "The integration is currently not loaded. Please try again in a moment."
+    },
+    "error": {
+      "invalid_url": "Please enter a valid http(s) URL.",
+      "no_alarm_events": "Select at least one event."
+    }
+  },
+  "selector": {
+    "alarm_events": {
+      "options": {
+        "fire_alarm_device": "Smoke / fire alarm",
+        "heat_alarm_device": "Heat alarm",
+        "high_temperature_alarm_device": "High temperature alarm",
+        "low_temperature_alarm_device": "Low temperature alarm",
+        "rising_temperature_alarm_device": "Rising temperature alarm",
+        "motion_alarm_device": "Motion alarm",
+        "panic_alarm_device": "Panic alarm",
+        "other_alarm_device": "Other alarms (gas, humidity, medical)",
+        "alert_device": "Device alert (e.g. tamper / removal)",
+        "warning_device": "Device warning (e.g. malfunction, smoke openings blocked)"
+      }
+    }
+  },
+  "issues": {
+    "new_rooms": {
+      "title": "Lupus Cloud: new devices found",
+      "description": "There are new devices in rooms that have not been offered for assignment yet: {rooms}. They are not added until you assign the room to an area: open the Lupus Cloud integration and select Configure. Leave the room empty and save to dismiss this message."
+    },
+    "no_external_url": {
+      "title": "Lupus Cloud: no external URL for alarms",
+      "description": "Home Assistant has no external URL, so the Lupus Cloud cannot push alarms. Alarms are only detected by polling. Configure an external URL, Home Assistant Cloud or set the webhook URL in the integration options."
+    },
+    "webhook_registration_failed": {
+      "title": "Lupus Cloud: webhook could not be registered",
+      "description": "The webhook for instant alarms could not be registered in the Lupus Cloud: {error}"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "alarm": { "name": "Alarm" },
+      "building_alarm": { "name": "Alarm" },
+      "problem": { "name": "Problem" },
+      "battery_low": { "name": "Battery" },
+      "tamper": { "name": "Tamper" }
+    },
+    "button": {
+      "acknowledge_alarm": { "name": "Acknowledge alarm" },
+      "acknowledge": { "name": "Confirm device functionality" }
+    },
+    "sensor": {
+      "battery_voltage": { "name": "Battery voltage" },
+      "battery_state": {
+        "name": "Battery state",
+        "state": {
+          "ok": "OK",
+          "critical": "Critical",
+          "empty": "Empty",
+          "not_available": "Not available"
+        }
+      },
+      "signal_level": {
+        "name": "Signal quality",
+        "state": {
+          "excellent": "Good",
+          "good": "Medium",
+          "weak": "Weak",
+          "unknown": "Unknown"
+        }
+      },
+      "status": {
+        "name": "Status",
+        "state": {
+          "active": "Active",
+          "warning": "Warning",
+          "error": "Error",
+          "alarm": "Alarm",
+          "muted": "Muted",
+          "decommissioned": "Decommissioned",
+          "not_available": "Not available",
+          "other": "Other"
+        }
+      },
+      "status_reason": { "name": "Status reason" },
+      "last_heartbeat": { "name": "Last contact" },
+      "last_event": { "name": "Last message" },
+      "unread_notifications": { "name": "Unread notifications" },
+      "last_notification": { "name": "Last notification" },
+      "webhook_status": {
+        "name": "Webhook",
+        "state": {
+          "registered": "Registered",
+          "disabled": "Disabled",
+          "no_external_url": "No external URL",
+          "error": "Error"
+        }
+      }
+    }
+  }
+}

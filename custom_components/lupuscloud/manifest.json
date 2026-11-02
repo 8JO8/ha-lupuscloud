@@ -1,0 +1,15 @@
+{
+  "domain": "lupuscloud",
+  "name": "Lupus Cloud",
+  "after_dependencies": ["cloud"],
+  "codeowners": ["@8JO8"],
+  "config_flow": true,
+  "dependencies": ["webhook"],
+  "documentation": "https://github.com/8JO8/ha-lupuscloud",
+  "integration_type": "hub",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/8JO8/ha-lupuscloud/issues",
+  "loggers": ["custom_components.lupuscloud"],
+  "requirements": [],
+  "version": "0.1.0"
+}

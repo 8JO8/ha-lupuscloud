@@ -1,0 +1,173 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lupus Cloud",
+        "description": "Melde dich mit deinem lupuscloud.com-Konto an.",
+        "data": {
+          "username": "E-Mail",
+          "password": "Passwort"
+        }
+      },
+      "mfa": {
+        "title": "Zwei-Faktor-Authentifizierung",
+        "description": "Gib den Code aus deiner {method} ein.",
+        "data": {
+          "code": "Code"
+        }
+      },
+      "areas": {
+        "title": "Räume Bereichen zuordnen",
+        "description": "Wähle für jeden Lupus-Raum mit Geräten einen Home-Assistant-Bereich. Die Geräte werden in diesem Bereich angelegt. Geräte in Räumen ohne Bereich werden nicht eingebunden. Du kannst das später in den Optionen der Integration ändern."
+      },
+      "reconfigure": {
+        "title": "Lupus-Cloud-Passwort ändern",
+        "description": "Gib das aktuelle Passwort für {username} ein, z. B. nachdem du es in der Lupus Cloud geändert hast.",
+        "data": {
+          "password": "Passwort"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Lupus Cloud erneut anmelden",
+        "description": "Die Anmeldung für {username} ist abgelaufen. Bitte gib dein Passwort erneut ein.",
+        "data": {
+          "password": "Passwort"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "E-Mail oder Passwort ungültig.",
+      "invalid_code": "Code ungültig oder abgelaufen. Bitte erneut anmelden.",
+      "cannot_connect": "Verbindung zur Lupus Cloud fehlgeschlagen.",
+      "mfa_required": "Ein Zwei-Faktor-Code wird benötigt.",
+      "no_rooms": "Bitte mindestens einen Raum einem Bereich zuordnen.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses Konto ist bereits eingerichtet.",
+      "reauth_successful": "Erneute Anmeldung erfolgreich.",
+      "reconfigure_successful": "Das Passwort wurde aktualisiert.",
+      "wrong_account": "Du hast dich mit einem anderen Konto angemeldet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Lupus Cloud Optionen",
+        "description": "Webhook-Status: {webhook_status}\n\nAlarme kommen sofort per Webhook. Messwerte werden im unten eingestellten Intervall abgefragt.",
+        "data": {
+          "alarm_events": "Ereignisse, die als Alarm gelten",
+          "scan_interval": "Abfrageintervall",
+          "webhook_enabled": "Alarme sofort per Webhook empfangen",
+          "webhook_url_override": "Öffentliche Home-Assistant-URL für den Webhook (optional)"
+        },
+        "data_description": {
+          "alarm_events": "Nur diese Ereignisse schalten die Alarm-Sensoren ein und lösen das Event lupuscloud_alarm aus. Alle Ereignisse stehen weiterhin als Events lupuscloud_webhook / lupuscloud_notification zur Verfügung.",
+          "webhook_url_override": "Nur nötig, wenn Home Assistant keine externe URL und kein Home Assistant Cloud hat. Trage die öffentliche Basisadresse deines Home Assistant ein (ohne /api/...)."
+        }
+      },
+      "areas": {
+        "title": "Räume Bereichen zuordnen",
+        "description": "Wähle für jeden Lupus-Raum mit Geräten einen Home-Assistant-Bereich. Geräte in Räumen ohne Bereich werden nicht eingebunden (bereits vorhandene werden entfernt)."
+      }
+    },
+    "abort": {
+      "not_loaded": "Die Integration ist gerade nicht geladen. Bitte versuche es gleich noch einmal."
+    },
+    "error": {
+      "invalid_url": "Bitte eine gültige http(s)-URL eingeben.",
+      "no_alarm_events": "Bitte mindestens ein Ereignis auswählen."
+    }
+  },
+  "selector": {
+    "alarm_events": {
+      "options": {
+        "fire_alarm_device": "Rauch-/Feueralarm",
+        "heat_alarm_device": "Hitzealarm",
+        "high_temperature_alarm_device": "Hohe-Temperatur-Alarm",
+        "low_temperature_alarm_device": "Niedrige-Temperatur-Alarm",
+        "rising_temperature_alarm_device": "Steigende-Temperatur-Alarm",
+        "motion_alarm_device": "Bewegungsalarm",
+        "panic_alarm_device": "Panikalarm",
+        "other_alarm_device": "Sonstige Alarme (Gas, Feuchtigkeit, medizinisch)",
+        "alert_device": "Gerätealarm (z. B. Sabotage / Demontage)",
+        "warning_device": "Gerätewarnung (z. B. Fehlfunktion, Raucheintrittsöffnung)"
+      }
+    }
+  },
+  "issues": {
+    "new_rooms": {
+      "title": "Lupus Cloud: neue Geräte gefunden",
+      "description": "Es gibt neue Geräte in Räumen, die noch nicht zur Zuordnung angeboten wurden: {rooms}. Sie werden erst eingebunden, wenn du den Raum einem Bereich zuordnest: Integration Lupus Cloud öffnen und Konfigurieren wählen. Lass den Raum leer und speichere, um diese Meldung auszublenden."
+    },
+    "no_external_url": {
+      "title": "Lupus Cloud: keine externe URL für Alarme",
+      "description": "Home Assistant hat keine externe URL, daher kann die Lupus Cloud Alarme nicht sofort übermitteln. Alarme werden nur per Abfrage erkannt. Richte eine externe URL oder Home Assistant Cloud ein oder trage die Webhook-URL in den Optionen der Integration ein."
+    },
+    "webhook_registration_failed": {
+      "title": "Lupus Cloud: Webhook konnte nicht registriert werden",
+      "description": "Der Webhook für sofortige Alarme konnte nicht in der Lupus Cloud registriert werden: {error}"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "alarm": { "name": "Alarm" },
+      "building_alarm": { "name": "Alarm" },
+      "problem": { "name": "Problem" },
+      "battery_low": { "name": "Batterie" },
+      "tamper": { "name": "Sabotage" }
+    },
+    "button": {
+      "acknowledge_alarm": { "name": "Alarm bestätigen" },
+      "acknowledge": { "name": "Gerätefunktion bestätigen" }
+    },
+    "sensor": {
+      "battery_voltage": { "name": "Batteriespannung" },
+      "battery_state": {
+        "name": "Batteriezustand",
+        "state": {
+          "ok": "OK",
+          "critical": "Kritisch",
+          "empty": "Leer",
+          "not_available": "Nicht verfügbar"
+        }
+      },
+      "signal_level": {
+        "name": "Empfangsqualität",
+        "state": {
+          "excellent": "Gut",
+          "good": "Mittel",
+          "weak": "Schwach",
+          "unknown": "Unbekannt"
+        }
+      },
+      "status": {
+        "name": "Status",
+        "state": {
+          "active": "Aktiv",
+          "warning": "Warnung",
+          "error": "Fehler",
+          "alarm": "Alarm",
+          "muted": "Stummgeschaltet",
+          "decommissioned": "Stillgelegt",
+          "not_available": "Nicht verfügbar",
+          "other": "Sonstiges"
+        }
+      },
+      "status_reason": { "name": "Statusgrund" },
+      "last_heartbeat": { "name": "Letzter Kontakt" },
+      "last_event": { "name": "Letzte Meldung" },
+      "unread_notifications": { "name": "Ungelesene Benachrichtigungen" },
+      "last_notification": { "name": "Letzte Benachrichtigung" },
+      "webhook_status": {
+        "name": "Webhook",
+        "state": {
+          "registered": "Registriert",
+          "disabled": "Deaktiviert",
+          "no_external_url": "Keine externe URL",
+          "error": "Fehler"
+        }
+      }
+    }
+  }
+}
