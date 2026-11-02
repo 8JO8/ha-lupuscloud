@@ -20,7 +20,6 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
-          ignore: brands
 
   ruff:
     runs-on: ubuntu-latest
