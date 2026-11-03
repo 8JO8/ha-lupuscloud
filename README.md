@@ -23,6 +23,9 @@ Messwerte (Temperatur, Batterie, Empfang, Meldungen) werden regelmäßig abgefra
   eingebunden.** Kommt später ein Gerät in einem neuen Raum hinzu, erscheint unter
   *Einstellungen → Reparaturen* ein Hinweis, und du kannst den Raum unter *Konfigurieren* zuordnen.
   Hebst du eine Zuordnung auf, werden die Geräte dieses Raums aus Home Assistant entfernt.
+  Verschiebst du ein Gerät in Home Assistant von Hand in einen anderen Bereich, bleibt es dort,
+  auch nach Neustarts. Nur wenn du die Zuordnung seines Raums in den Optionen änderst, zieht es
+  in den neuen Bereich um.
 
 ### Unterstützte Geräte
 

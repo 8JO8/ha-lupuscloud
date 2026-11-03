@@ -26,6 +26,8 @@ CONF_CLOUDHOOK_URL: Final = "cloudhook_url"
 CONF_AREAS: Final = "areas"
 # Rooms that were already offered in the area step (to detect new ones)
 CONF_KNOWN_ROOMS: Final = "known_rooms"
+# Room -> area mapping that was last applied to the devices (stored in entry.data)
+CONF_APPLIED_AREAS: Final = "applied_areas"
 
 DEFAULT_SCAN_INTERVAL: Final = 5  # minutes
 MIN_SCAN_INTERVAL: Final = 1

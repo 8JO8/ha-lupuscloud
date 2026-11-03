@@ -11,7 +11,14 @@ from homeassistant.helpers import device_registry as dr, issue_registry as ir
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import LupusCloudApi, LupusCloudError
-from .const import CONF_ACCOUNT_UUID, CONF_AREAS, CONF_KNOWN_ROOMS, CONF_REFRESH_TOKEN, DOMAIN
+from .const import (
+    CONF_ACCOUNT_UUID,
+    CONF_APPLIED_AREAS,
+    CONF_AREAS,
+    CONF_KNOWN_ROOMS,
+    CONF_REFRESH_TOKEN,
+    DOMAIN,
+)
 from .coordinator import LupusCloudCoordinator
 from .entity import building_device_info
 from .webhook import async_remove_webhooks, async_setup_webhook, async_unload_webhook
@@ -73,10 +80,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: LupusConfigEntry) -> boo
 
     @callback
     def _on_update() -> None:
-        apply_area_mapping(hass, entry, coordinator, force=False)
+        apply_area_mapping(hass, entry, coordinator)
         check_new_rooms(hass, entry, coordinator)
 
-    apply_area_mapping(hass, entry, coordinator, force=True)
+    # Force the mapping only for rooms whose area was changed in the options
+    # since it was last applied; manual area changes in HA are kept otherwise.
+    mapping: dict[str, str] = entry.options.get(CONF_AREAS, {})
+    applied: dict[str, str] = entry.data.get(CONF_APPLIED_AREAS, mapping)
+    changed = {room for room, area in mapping.items() if applied.get(room) != area}
+    apply_area_mapping(hass, entry, coordinator, force_rooms=changed)
+    if entry.data.get(CONF_APPLIED_AREAS) != mapping:
+        hass.config_entries.async_update_entry(
+            entry, data={**entry.data, CONF_APPLIED_AREAS: dict(mapping)}
+        )
     check_new_rooms(hass, entry, coordinator)
     entry.async_on_unload(coordinator.async_add_listener(_on_update))
 
@@ -168,12 +184,13 @@ def apply_area_mapping(
     hass: HomeAssistant,
     entry: ConfigEntry,
     coordinator: LupusCloudCoordinator,
-    force: bool,
+    force_rooms: set[str] | None = None,
 ) -> None:
     """Move devices into the HA area configured for their Lupus room.
 
-    With ``force`` (setup / options changed) the mapping wins; otherwise only
-    devices without an area are touched so manual changes are kept.
+    Devices without an area always get the mapped one. Devices that already
+    have an area are only moved if their room is in ``force_rooms`` (its
+    mapping was changed in the options), so manual changes are kept.
     """
     mapping: dict[str, str] = entry.options.get(CONF_AREAS, {})
     if not mapping or not coordinator.data:
@@ -189,5 +206,5 @@ def apply_area_mapping(
             entry_device = registry.async_get_device(identifiers={(DOMAIN, uuid)})
         if entry_device is None or entry_device.area_id == area_id:
             continue
-        if force or entry_device.area_id is None:
+        if entry_device.area_id is None or device.get("nodeRef") in (force_rooms or set()):
             registry.async_update_device(entry_device.id, area_id=area_id)
