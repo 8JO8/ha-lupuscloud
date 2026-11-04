@@ -1,12 +1,18 @@
 # Lupus Cloud für Home Assistant
 
-Inoffizielle Home-Assistant-Integration für Geräte in der [Lupus Cloud](https://lupuscloud.com)
+[![HACS Default](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/default)
+[![Release](https://img.shields.io/github/v/release/8JO8/ha-lupuscloud)](https://github.com/8JO8/ha-lupuscloud/releases)
+
+Home-Assistant-Integration für Geräte in der [Lupus Cloud](https://lupuscloud.com)
 (Lupus Electronics), z. B. die Mobilfunk-Rauchwarnmelder. Alarme kommen **sofort per Webhook**,
 Messwerte (Temperatur, Batterie, Empfang, Meldungen) werden regelmäßig abgefragt.
+Installierbar über den **Marketplace** (ab Home Assistant 2026.11) bzw. **HACS**, siehe
+[Installation](#installation).
 
 > **Hinweis:** Lupus bietet keine offizielle API. Die Integration nutzt dieselben Schnittstellen
 > wie die Web-App lupuscloud.com. Änderungen seitens Lupus können sie jederzeit brechen.
-> Dieses Projekt steht in keiner Verbindung zu Lupus Electronics.
+> Dieses private Projekt wird nicht von Lupus Electronics entwickelt oder unterstützt. Markennamen
+> und Logo werden mit freundlicher Genehmigung der Lupus-Electronics GmbH verwendet.
 > **Verlasse dich für den Brandschutz nicht ausschließlich auf Home Assistant.**
 
 ## Funktionen
@@ -82,14 +88,33 @@ automation:
 
 ## Installation
 
-### HACS (empfohlen)
+Die Integration ist in der offiziellen HACS-Standardliste. Ein benutzerdefiniertes Repository ist
+nicht nötig.
+
+### Home Assistant 2026.11 und neuer: Marketplace
+
+Seit Home Assistant 2026.11 ist HACS als **Marketplace** fest eingebaut.
+
+[![Im Marketplace öffnen](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=8JO8&repository=ha-lupuscloud&category=integration)
+
+1. *Einstellungen → Marketplace* öffnen (oder den Button oben verwenden). Beim ersten Öffnen den
+   Hinweis zu Community-Inhalten bestätigen.
+2. Nach **Lupus Cloud** suchen und installieren. Falls ein Neustart nötig ist, erscheint ein
+   Hinweis unter *Einstellungen → Reparaturen*.
+3. *Einstellungen → Geräte & Dienste → Integration hinzufügen → Lupus Cloud*
+
+### Home Assistant bis 2026.10: HACS
+
+Voraussetzung ist ein installiertes [HACS](https://hacs.xyz/docs/use/).
 
 [![In HACS öffnen](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=8JO8&repository=ha-lupuscloud&category=integration)
 
-1. HACS → ⋮ → *Benutzerdefinierte Repositories* → `https://github.com/8JO8/ha-lupuscloud`, Typ *Integration*
-   (oder den Button oben verwenden)
-2. „Lupus Cloud“ installieren und Home Assistant neu starten
+1. HACS öffnen (oder den Button oben verwenden) und nach **Lupus Cloud** suchen.
+2. *Herunterladen* wählen und Home Assistant neu starten.
 3. *Einstellungen → Geräte & Dienste → Integration hinzufügen → Lupus Cloud*
+
+Wer die Integration früher als benutzerdefiniertes Repository hinzugefügt hat, muss nichts
+ändern. Updates kommen weiterhin über HACS bzw. den Marketplace.
 
 ### Manuell
 
@@ -152,11 +177,11 @@ Home Assistant läuft dann unter http://localhost:8123 mit eingebundener Integra
 
 ## Rechtliches, Quellen & Marken
 
-Inoffizielles Projekt ohne Verbindung zur Lupus-Electronics GmbH. „Lupus“, „Lupus Electronics“,
-„Lupus Cloud“ und das Wolf-Logo sind Marken der Lupus-Electronics GmbH und werden nur
-beschreibend verwendet. Quellen aller übernommenen Bestandteile (Logo, Bezeichnungen,
-Schnittstellen), Zweck, Haftungsausschluss und Kontakt für Entfernungswünsche stehen in
-**[NOTICE.md](NOTICE.md)**.
+Privates Open-Source-Projekt, das nicht von der Lupus-Electronics GmbH entwickelt oder
+unterstützt wird. „Lupus“, „Lupus Electronics“, „Lupus Cloud“ und das Wolf-Logo sind Marken der
+Lupus-Electronics GmbH. **Markennamen und Logo werden mit freundlicher Genehmigung der
+Lupus-Electronics GmbH verwendet.** Quellen aller übernommenen Bestandteile (Logo, Bezeichnungen,
+Schnittstellen), Zweck und Haftungsausschluss stehen in **[NOTICE.md](NOTICE.md)**.
 
 ## Lizenz
 
