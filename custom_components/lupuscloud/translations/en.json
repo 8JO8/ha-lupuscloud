@@ -91,7 +91,8 @@
         "panic_alarm_device": "Panic alarm",
         "other_alarm_device": "Other alarms (gas, humidity, medical)",
         "alert_device": "Device alert (e.g. tamper / removal)",
-        "warning_device": "Device warning (e.g. malfunction, smoke openings blocked)"
+        "warning_device": "Device warning (e.g. malfunction, smoke openings blocked)",
+        "mold_risk": "Mold risk (temperature / humidity sensors)"
       }
     }
   },

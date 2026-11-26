@@ -58,6 +58,8 @@ ALARM_EVENT_REASONS: Final[dict[str, frozenset[str]]] = {
     "WARNING_DEVICE": frozenset(
         {"WARNING", "MALFUNCTION", "SMOKE_OPENINGS", "ENVIRONMENT_OBSTACLES", "REPLACE"}
     ),
+    # Mold risk reported by temperature / humidity sensors (opt-in)
+    "MOLD_RISK": frozenset({"MOLD_RISK"}),
 }
 DEFAULT_ALARM_EVENTS: Final = [
     "FIRE_ALARM_DEVICE",

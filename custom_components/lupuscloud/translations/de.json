@@ -91,7 +91,8 @@
         "panic_alarm_device": "Panikalarm",
         "other_alarm_device": "Sonstige Alarme (Gas, Feuchtigkeit, medizinisch)",
         "alert_device": "Gerätealarm (z. B. Sabotage / Demontage)",
-        "warning_device": "Gerätewarnung (z. B. Fehlfunktion, Raucheintrittsöffnung)"
+        "warning_device": "Gerätewarnung (z. B. Fehlfunktion, Raucheintrittsöffnung)",
+        "mold_risk": "Schimmelrisiko (Temperatur-/Feuchtesensoren)"
       }
     }
   },

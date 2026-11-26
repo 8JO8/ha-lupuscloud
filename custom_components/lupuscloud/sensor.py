@@ -55,6 +55,7 @@ STATUS_REASONS = {
     "HUMIDITY_ALARM": "Feuchtigkeitsalarm",
     "LOW_TEMPERATURE_ALARM": "Temperaturalarm (niedrig)",
     "MALFUNCTION": "Fehlfunktion",
+    "MOLD_RISK": "Schimmelrisiko",
     "MOTION_ALARM": "Bewegungsalarm",
     "MUTED": "Stummgeschaltet",
     "NOT_AVAILABLE": "N/A",

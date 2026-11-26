@@ -156,6 +156,23 @@ async def main() -> None:
         st = await state(session, target_entity)
         check("acknowledge clears alarm", st == "off", st)
 
+        # --- mold risk is opt-in
+        await post_webhook(session, fire_payload(device_uuid, "MOLD_RISK"), secret)
+        await asyncio.sleep(1)
+        st = await state(session, target_entity)
+        check("mold risk ignored when not selected", st == "off", st)
+        await set_alarm_events(session, ["fire_alarm_device", "mold_risk"])
+        await post_webhook(session, fire_payload(device_uuid, "MOLD_RISK"), secret)
+        await asyncio.sleep(1)
+        st = await state(session, target_entity)
+        check("mold risk triggers when selected", st == "on", st)
+        status_ok = fire_payload(device_uuid, "DEVICE_STATUS")
+        status_ok["message"]["data"]["status_reason"] = "OK"
+        await post_webhook(session, status_ok, secret)
+        await asyncio.sleep(1)
+        st = await state(session, target_entity)
+        check("device status OK clears alarm", st == "off", st)
+
         # --- reconfigure flow is offered
         async with session.post(
             f"{BASE}/api/config/config_entries/flow",
